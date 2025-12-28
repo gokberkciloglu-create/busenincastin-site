@@ -13,18 +13,64 @@ body {
   color: #fff;
 }
 
-/* LAMBA + IŞIK */
-.lamp {
+/* LAMBA + IŞIK (ÇİZİM GİBİ) */
+.lamp{
   position: fixed;
-  top: -40px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 520px;
-  height: 740px;
-  background:
-    radial-gradient(circle at 50% 10%, rgba(155,77,255,0.28), rgba(155,77,255,0.0) 70%);
+  width: 900px;
+  height: 900px;
   pointer-events: none;
+  z-index: 1;
 }
+
+/* Kablo */
+.lamp::before{
+  content:"";
+  position:absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 160px;
+  background: rgba(227,200,255,0.25);
+  border-radius: 999px;
+}
+
+/* Kubbe lamba */
+.lamp::after{
+  content:"";
+  position:absolute;
+  top: 135px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  height: 110px;
+  background: radial-gradient(circle at 50% 25%, rgba(227,200,255,0.18), rgba(10,3,18,0.9) 70%);
+  border: 1px solid rgba(227,200,255,0.12);
+  border-bottom-left-radius: 220px 160px;
+  border-bottom-right-radius: 220px 160px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+}
+
+/* Işık konisi */
+.lamp{
+  background:
+    radial-gradient(closest-side at 50% 210px, rgba(227,200,255,0.22), rgba(227,200,255,0) 65%),
+    conic-gradient(from 180deg at 50% 210px,
+      rgba(155,77,255,0) 0deg,
+      rgba(155,77,255,0.00) 35deg,
+      rgba(155,77,255,0.18) 55deg,
+      rgba(155,77,255,0.18) 125deg,
+      rgba(155,77,255,0.00) 145deg,
+      rgba(155,77,255,0) 360deg);
+  filter: blur(0px);
+  opacity: 1;
+}
+
 
 /* FORM KUTUSU */
 .container {
@@ -36,6 +82,9 @@ body {
   box-shadow: 0 20px 70px rgba(0,0,0,0.45);
   text-align: center;
   backdrop-filter: blur(6px);
+  position: relative;
+z-index: 2;
+
 }
 
 .desc {
