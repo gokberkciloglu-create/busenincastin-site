@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bu Senin Castin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="lamp"></div>
+
+  <div class="container">
+    <p class="desc">
+      Burada istediğin şeyi, anonim bir şekilde, rahatça anlatabilirsin.
+    </p>
+
+    <form id="derdimForm">
+      <label>Rumuz</label>
+      <input type="text" name="rumuz" placeholder="Rumuzun (örn: kod adı bela)" required />
+
+      <label>Derdin</label>
+      <textarea name="dert" placeholder="Derdini buraya yazabilirsin..." required></textarea>
+
+      <button type="submit">Gönder</button>
+    </form>
+
+    <p class="note">
+      • Anonimsin. Bu mesaj kaydedilmez.<br/>
+      • Sadece e-posta olarak iletilir.
+    </p>
+
+    <div class="icons" aria-label="Sosyal medya">
+      <span title="Spotify">Spotify</span>
+      <span title="YouTube">YouTube</span>
+      <span title="Instagram">Instagram</span>
+      <span title="TikTok">TikTok</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

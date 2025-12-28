@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #4a1a73 0%, #160622 60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+/* LAMBA + IŞIK */
+.lamp {
+  position: fixed;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  height: 740px;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(155,77,255,0.28), rgba(155,77,255,0.0) 70%);
+  pointer-events: none;
+}
+
+/* FORM KUTUSU */
+.container {
+  width: 92%;
+  max-width: 480px;
+  background: rgba(30, 10, 50, 0.78);
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.45);
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.desc {
+  margin: 0 0 18px;
+  font-size: 14px;
+  opacity: 0.92;
+  line-height: 1.35;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin: 14px 0 6px;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(227,200,255,0.15);
+  outline: none;
+  resize: none;
+  background: rgba(18, 6, 31, 0.55);
+  color: #fff;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(227,200,255,0.55);
+}
+
+textarea {
+  min-height: 132px;
+}
+
+button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #9b4dff;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 16px 40px rgba(155,77,255,0.22);
+}
+
+button:hover {
+  background: #b17dff;
+}
+
+.note {
+  margin: 14px 0 0;
+  font-size: 11px;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.icons {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 11px;
+  opacity: 0.55;
+}
+
+.icons span {
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(227,200,255,0.12);
+  background: rgba(18, 6, 31, 0.25);
+}
+
+/* Desktop'ta form ışığa göre biraz daha ortalı görünsün */
+@media (min-width: 900px) {
+  .container {
+    transform: translateY(10px);
+  }
+}
