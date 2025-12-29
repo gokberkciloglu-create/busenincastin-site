@@ -14,7 +14,7 @@
     </p>
 
     <section class="card">
-      <form id="derdimForm" class="form">
+      <form id="derdimForm" class="form" novalidate>
         <div class="field">
           <label for="rumuz">Rumuz</label>
           <input id="rumuz" name="rumuz" type="text" placeholder="Rumuzun (örn: kod adı bela)" required />
@@ -27,9 +27,12 @@
 
         <button class="btn" type="submit">Gönder</button>
 
+        <!-- Alert yerine sayfa içi mesaj -->
+        <p id="statusMsg" class="status" role="status" aria-live="polite"></p>
+
         <ul class="note">
-          <li>Anonimsin. Bu mesaj kaydedilmez.</li>
-          <li>Sadece e-posta olarak iletilir.</li>
+          <li>Mesajlar kaydedilmez.</li>
+          <li>Okuduktan sonra ben bile tekrar göremem.</li>
         </ul>
 
         <nav class="social" aria-label="Sosyal medya">
