@@ -55,3 +55,30 @@ form.addEventListener("submit", async (e) => {
     setError("Bağlantı hatası. Tekrar dener misin?");
   }
 });
+
+const bgAudio = document.getElementById("bgAudio");
+const sendAudio = document.getElementById("sendAudio");
+const audioToggle = document.getElementById("audioToggle");
+let audioOn = false;
+
+audioToggle.addEventListener("click", () => {
+  audioOn = !audioOn;
+  if(audioOn){
+    bgAudio.volume = 0.18;
+    bgAudio.play();
+    audioToggle.textContent = "🔊";
+  } else {
+    bgAudio.pause();
+    audioToggle.textContent = "🔈";
+  }
+});
+
+// play send sound on success
+const _origSetStatus = setStatus;
+setStatus = function(){
+  if(audioOn){
+    sendAudio.volume = 0.25;
+    sendAudio.play();
+  }
+  _origSetStatus();
+};
