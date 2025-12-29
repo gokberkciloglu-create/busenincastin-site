@@ -107,19 +107,32 @@ input::placeholder, textarea::placeholder{
 }
 
 .status{
-  margin: 10px 0 0;
-  min-height: 18px;
+  margin: 12px 0 0;
+  min-height: 40px;
   text-align: center;
   font-size: 13px;
+  line-height: 1.35;
   color: rgba(227,200,255,0.85);
   opacity: 0;
-  transform: translateY(-2px);
-  transition: opacity 220ms ease, transform 220ms ease;
+  transform: translateY(-6px);
+}
+
+.status .line1{
+  display:block;
+  font-size: 13px;
+  color: rgba(227,200,255,0.92);
+  margin-bottom: 2px;
+}
+
+.status .line2{
+  display:block;
+  font-size: 13px;
+  color: rgba(227,200,255,0.78);
 }
 
 .status.show{
   opacity: 1;
-  transform: translateY(0);
+  animation: statusIn 420ms ease-out both;
 }
 
 .note{
@@ -156,4 +169,11 @@ input::placeholder, textarea::placeholder{
   width: 18px;
   height: 18px;
   fill: rgba(227,200,255,0.65);
+}
+
+
+@keyframes statusIn {
+  0% { opacity: 0; transform: translateY(-6px) scale(0.995); filter: blur(1px); }
+  60% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
