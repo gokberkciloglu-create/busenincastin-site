@@ -15,20 +15,28 @@ body{
   overflow-x:hidden;
 }
 
+/* Mobile background */
 @media (max-width: 640px){
   body{
     background: url("/bg-mobile.png") no-repeat center top / cover, #12051E;
   }
 }
 
+/* CONTENT POSITION: move everything down into the light beam */
 .wrap{
   min-height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
   gap: 18px;
-  padding: 34px 18px;
+  padding: 160px 18px 34px; /* <-- moved down */
+}
+
+@media (max-width: 640px){
+  .wrap{
+    padding: 140px 18px 28px; /* slightly less on mobile */
+  }
 }
 
 .hero{
