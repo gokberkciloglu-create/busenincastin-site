@@ -1,10 +1,10 @@
 const form = document.getElementById("derdimForm");
 const statusMsg = document.getElementById("statusMsg");
 
-function setStatusTwoLine(line1, line2) {
+function setStatus() {
   statusMsg.innerHTML = `
-    <span class="line1">${line1}</span>
-    <span class="line2">${line2}</span>
+    <span class="line1">Mesajın gönderildi🍃</span>
+    <span class="line2">Paylaştığın şey güvende. Ben buradayım ✨</span>
   `;
   statusMsg.classList.add("show");
 }
@@ -12,6 +12,11 @@ function setStatusTwoLine(line1, line2) {
 function clearStatus() {
   statusMsg.innerHTML = "";
   statusMsg.classList.remove("show");
+}
+
+function setError(text) {
+  statusMsg.innerHTML = `<span class="line1">${text}</span>`;
+  statusMsg.classList.add("show");
 }
 
 form.addEventListener("submit", async (e) => {
@@ -22,7 +27,7 @@ form.addEventListener("submit", async (e) => {
   const dert = form.dert.value.trim();
 
   if (!rumuz || !dert) {
-    setStatusTwoLine("Bir şey eksik 🤍", "Rumuz ve derdini doldurur musun?");
+    setError("Lütfen rumuz ve derdini doldur 🤍");
     return;
   }
 
@@ -34,19 +39,19 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (res.ok) {
-      setStatusTwoLine("Mesajın gönderildi🍃", "Paylaştığın şey güvende. Ben buradayım ✨");
+      setStatus();
       form.reset();
-      setTimeout(() => clearStatus(), 6500);
+      setTimeout(clearStatus, 6500);
       return;
     }
 
     if (res.status === 429) {
-      setStatusTwoLine("Biraz yavaş 🤍", "1 dakika içinde en fazla 2 mesaj gönderebilirsin.");
+      setError("Biraz yavaş 🤍 1 dakika içinde en fazla 2 mesaj gönderebilirsin.");
       return;
     }
 
-    setStatusTwoLine("Bir hata oldu", "Tekrar dener misin?");
+    setError("Bir hata oldu, tekrar dener misin?");
   } catch (err) {
-    setStatusTwoLine("Bağlantı hatası", "Tekrar dener misin?");
+    setError("Bağlantı hatası. Tekrar dener misin?");
   }
 });
