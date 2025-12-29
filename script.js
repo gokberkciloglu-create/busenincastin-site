@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
   });
 
   if (res.ok) {
-    alert("Gönderildi 🤍");
+    alert("Sırrın bizde güvende, bizden haber bekle ✨");
     form.reset();
   } else {
     alert("Bir hata oldu, tekrar dene.");
