@@ -30,7 +30,7 @@ body{
   align-items:center;
   justify-content:flex-start;
   gap: 18px;
-  padding: 500px 18px 34px; /* moved further down: hero+card start in the light cone */
+  padding: 520px 18px 34px; /* moved further down: hero+card start in the light cone */
 }
 
 @media (max-width: 640px){
