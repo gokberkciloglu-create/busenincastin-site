@@ -21,7 +21,6 @@ export default async function handler(req, res) {
   const { rumuz, dert } = req.body || {};
   if (!rumuz || !dert) return res.status(400).json({ error: "Eksik alan" });
 
-  // Rate limit
   const ip = getClientIp(req);
   const now = Date.now();
   const entry = buckets.get(ip) || { start: now, count: 0 };
@@ -46,11 +45,11 @@ export default async function handler(req, res) {
 
     const resend = new Resend(apiKey);
 
-    const subject = `🎧 Yeni Dert Geldi – Kod Adı: ${String(rumuz).slice(0, 60)}`;
+    const subject = `Busenincastin – Kod Adı: ${String(rumuz).slice(0, 60)}`;
     const text = `Kod Adı: ${rumuz}\n\nDert:\n${dert}`;
 
     const { error } = await resend.emails.send({
-      from: "Buse’nin Cast’in <onboarding@resend.dev>",
+      from: "🌗 Yeni Dert Geldi <onboarding@resend.dev>",
       to: "gokberkciloglu@gmail.com",
       subject,
       text,
