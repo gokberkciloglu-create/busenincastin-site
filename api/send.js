@@ -37,20 +37,34 @@ export default async function handler(req, res) {
   }
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: "RESEND_API_KEY eksik (Vercel Env)" });
+    }
+
+    const resend = new Resend(apiKey);
 
     const subject = `🎧 Yeni Dert Geldi – Kod Adı: ${String(rumuz).slice(0, 60)}`;
     const text = `Kod Adı: ${rumuz}\n\nDert:\n${dert}`;
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "Buse’nin Cast’in <noreply@send.busenincastin.com>",
       to: "busenincastin@gmail.com",
       subject,
       text,
     });
 
-    return res.status(200).json({ success: true });
+    if (error) {
+      console.error("RESEND ERROR:", error);
+      return res.status(500).json({
+        error: "Mail gönderilemedi",
+        detail: error.message || String(error),
+      });
+    }
+
+    return res.status(200).json({ success: true, id: data?.id });
   } catch (e) {
-    return res.status(500).json({ error: "Mail gönderilemedi", detail: e?.message });
+    console.error("SERVER ERROR:", e);
+    return res.status(500).json({ error: "Mail gönderilemedi", detail: e?.message || String(e) });
   }
 }
