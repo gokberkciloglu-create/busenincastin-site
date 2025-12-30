@@ -1,11 +1,10 @@
-// Vercel Serverless Function (pages router style /api/send.js)
-// Bu endpoint veri depolamaz; sadece e-posta gönderimi için kullanılacak.
-// Şu an Namecheap DNS doğrulaması bekleniyor; Resend entegresi bir sonraki adımda eklenecek.
+// /api/send.js (Vercel Serverless Function - pages router)
+
+import { Resend } from "resend";
 
 const WINDOW_MS = 60_000; // 1 dakika
 const MAX_PER_WINDOW = 2;
 
-// Best-effort in-memory rate limit (serverless ortamda her zaman %100 garanti değildir ama ciddi azaltır)
 const buckets = globalThis.__rateBuckets || (globalThis.__rateBuckets = new Map());
 
 function getClientIp(req) {
@@ -16,14 +15,10 @@ function getClientIp(req) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const { rumuz, dert } = req.body || {};
-  if (!rumuz || !dert) {
-    return res.status(400).json({ error: "Eksik alan" });
-  }
+  if (!rumuz || !dert) return res.status(400).json({ error: "Eksik alan" });
 
   const ip = getClientIp(req);
   const now = Date.now();
@@ -41,6 +36,21 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Rate limit" });
   }
 
-  // TODO: DNS doğrulaması sonrası Resend ile mail gönderimi burada olacak.
-  return res.status(200).json({ success: true });
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const subject = `🎧 Yeni Dert Geldi – Kod Adı: ${String(rumuz).slice(0, 60)}`;
+    const text = `Kod Adı: ${rumuz}\n\nDert:\n${dert}`;
+
+    await resend.emails.send({
+      from: "Buse’nin Cast’in <noreply@send.busenincastin.com>",
+      to: "busenincastin@gmail.com",
+      subject,
+      text,
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (e) {
+    return res.status(500).json({ error: "Mail gönderilemedi", detail: e?.message });
+  }
 }
