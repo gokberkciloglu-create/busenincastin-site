@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     const text = `Kod Adı: ${rumuz}\n\nDert:\n${dert}`;
 
     const { data, error } = await resend.emails.send({
-      from: "Buse’nin Cast’in <noreply@send.busenincastin.com>",
+      from: "Buse’nin Cast’in <onboarding@resend.dev>",
       to: "busenincastin@gmail.com",
       subject,
       text,
