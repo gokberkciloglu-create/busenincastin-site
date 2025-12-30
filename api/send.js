@@ -1,4 +1,5 @@
 // /api/send.js (Vercel Serverless Function - pages router)
+// Resend TESTING MODE uyumlu: sadece hesap sahibinin mailine gönderir.
 
 import { Resend } from "resend";
 
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
   const { rumuz, dert } = req.body || {};
   if (!rumuz || !dert) return res.status(400).json({ error: "Eksik alan" });
 
+  // Rate limit
   const ip = getClientIp(req);
   const now = Date.now();
   const entry = buckets.get(ip) || { start: now, count: 0 };
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
   try {
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: "RESEND_API_KEY eksik (Vercel Env)" });
+      return res.status(500).json({ error: "RESEND_API_KEY eksik" });
     }
 
     const resend = new Resend(apiKey);
@@ -47,24 +49,19 @@ export default async function handler(req, res) {
     const subject = `🎧 Yeni Dert Geldi – Kod Adı: ${String(rumuz).slice(0, 60)}`;
     const text = `Kod Adı: ${rumuz}\n\nDert:\n${dert}`;
 
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "Buse’nin Cast’in <onboarding@resend.dev>",
-      to: "busenincastin@gmail.com",
+      to: "gokberkciloglu@gmail.com",
       subject,
       text,
     });
 
     if (error) {
-      console.error("RESEND ERROR:", error);
-      return res.status(500).json({
-        error: "Mail gönderilemedi",
-        detail: error.message || String(error),
-      });
+      return res.status(500).json({ error: "Mail gönderilemedi", detail: error.message || String(error) });
     }
 
-    return res.status(200).json({ success: true, id: data?.id });
+    return res.status(200).json({ success: true });
   } catch (e) {
-    console.error("SERVER ERROR:", e);
     return res.status(500).json({ error: "Mail gönderilemedi", detail: e?.message || String(e) });
   }
 }
